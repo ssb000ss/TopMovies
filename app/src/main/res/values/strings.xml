@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">TopMovie</string>
+    <string name="menu_item_title_popular">Популярные</string>
+    <string name="menu_item_title_latest">Последние</string>
+</resources>

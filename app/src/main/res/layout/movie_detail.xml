@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.generation.topmovie.MovieDetailActivity"
+    android:orientation="vertical">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:padding="16dp"
+                android:background="@color/colorBlack">
+                <TextView
+                    android:id="@+id/tv_detail_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp"
+                    android:textSize="26sp"
+                    android:gravity="center"
+                    android:text="Doctor Who: The Day of the Doctor"
+                    android:textColor="#e9e9e9"
+        />
+
+                <TextView
+                    android:layout_marginTop="4dp"
+                    android:id="@+id/tv_detail_release_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Release date 2013-11-23"
+                    android:textColor="#cecece" />
+            </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_gravity="center"
+        >
+        <ImageView
+            android:layout_marginTop="4dp"
+            android:id="@+id/iv_detail_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"/>
+    </RelativeLayout>
+
+            <RatingBar
+                android:layout_marginTop="4dp"
+                android:id="@+id/rb_detail"
+                style="@style/Widget.AppCompat.RatingBar.Indicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:clickable="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:numStars="10"
+                android:rating="7.5" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#dadada"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp"
+        />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="bottom">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_detail_overview"
+            android:padding="8dp"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:text="In 2013, something terrible is awakening in London's National Gallery; in 1562, a murderous plot is afoot in Elizabethan England; and somewhere in space an ancient battle reaches its devastating conclusion. All of reality is at stake as the Doctor's own dangerous past comes back to haunt him."/>
+    </ScrollView>
+    </LinearLayout>
