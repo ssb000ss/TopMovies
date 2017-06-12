@@ -1,6 +1,5 @@
 package com.example.generation.topmovie;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -24,9 +23,10 @@ import org.json.JSONObject;
 
 
 public class MainActivity extends AppCompatActivity {
-    JSONArray jsonArray = new JSONArray();
-    Movie []movies;
-    String s="top_rated";
+    MovieAdapter movieAdapter=new MovieAdapter(this);
+    JSONObject jsonObject = new JSONObject();
+    static Movie [] movies;
+    String s="popular";
     String URL="http://api.themoviedb.org/3/movie/"+s+"?api_key=3e6addce8a705c313a389e1a6c58a113";
 
     @Override
@@ -34,37 +34,55 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-        final JSONObject[] jsonArray = {null};
+        Request(URL);
+        RecyclerView.LayoutManager layoutManager=new GridLayoutManager(this,2);
+        RecyclerView recyclerView=(RecyclerView)findViewById(R.id.rv_movie);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(movieAdapter);
 
+    }
+
+    private void Request(String url) {
         RequestQueue queue= Volley.newRequestQueue(this);
 
-        JsonObjectRequest request=new JsonObjectRequest(Request.Method.GET, URL, null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest request=new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                jsonArray[0] = response;
+                jsonObject = response;
+                movies=ParseJSonArray(jsonObject);
+                movieAdapter.setMovieList(movies);
+
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                System.out.println( error.getMessage());
 
             }
         });
-
         queue.add(request);
+    }
 
+    private Movie [] ParseJSonArray(JSONObject o) {
+        JSONArray array=null;
         try {
-            JSONArray array=jsonArray[0].getJSONArray("results");
+            array=o.getJSONArray("results");
+            System.out.println("GOT IT");
         } catch (JSONException e) {
             e.printStackTrace();
+            System.out.println("NOT");
         }
 
+        Movie [] movies=new Movie[array.length()];
+        for (int i = 0; i <array.length() ; i++) {
+            try {
+                movies[i]=new Movie((JSONObject) array.get(i));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
 
-        RecyclerView.LayoutManager layoutManager=new GridLayoutManager(this,2);
-        RecyclerView recyclerView=(RecyclerView)findViewById(R.id.rv_movie);
-        recyclerView.setLayoutManager(layoutManager);
-        MovieAdapter movieAdapter=new MovieAdapter(movies,this);
-        recyclerView.setAdapter(movieAdapter);
-
+        return movies;
     }
 
     @Override
@@ -78,9 +96,12 @@ public class MainActivity extends AppCompatActivity {
         int id=item.getItemId();
         switch (id){
             case R.id.menu_item_id_pop:
-                startActivity(new Intent(MainActivity.this, MovieDetailActivity.class));
+                s="popular";
+                Request(URL);
                 break;
             case R.id.menu_item_id_latest:
+                s="top_rated";
+                Request(URL);
                 break;
         }
         return super.onOptionsItemSelected(item);

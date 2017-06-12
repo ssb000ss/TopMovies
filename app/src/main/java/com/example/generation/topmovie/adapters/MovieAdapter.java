@@ -28,6 +28,14 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
     private Movie [] movieList;
     private Context context;
 
+    public MovieAdapter(Context context) {
+        this.context = context;
+    }
+
+    public void setMovieList(Movie[] movieList) {
+        this.movieList = movieList;
+    }
+
     public MovieAdapter(Movie[] movieList, Context context) {
         this.movieList = movieList;
         this.context = context;

@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -24,7 +25,7 @@ public class MovieDetailActivity extends AppCompatActivity {
     TextView release_date;
     ImageView image;
     RatingBar rating;
-    TextView overview;
+    WebView overview;
 
 
     @Override
@@ -36,16 +37,17 @@ public class MovieDetailActivity extends AppCompatActivity {
         release_date=(TextView) findViewById(R.id.tv_detail_release_date);
         image=(ImageView) findViewById(R.id.iv_detail_image);
         rating=(RatingBar) findViewById(R.id.rb_detail);
-        overview=(TextView) findViewById(R.id.tv_detail_overview);
+        overview=(WebView) findViewById(R.id.tv_detail_overview);
 
         Movie movie=getIntent().getParcelableExtra(EXTRA_MOVIE_IMAGE);
+
         title.setText(movie.getTitle());
         release_date.setText(movie.getRelease_date());
         rating.setRating(movie.getVote_average());
-        overview.setText(movie.getOverview());
+        overview.loadData(movie.getOverview(), "text/html; charset=utf-8", "UTF-8");
 
         Glide.with(this)
-                .load(movie.getUrlOfImage())
+                .load(movie.getUrlOfPoster())
                 .asBitmap()
                 .error(R.drawable.ic_fullscreen)
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)

@@ -19,6 +19,7 @@ public class Movie implements Parcelable{
     String VOTE_AVERAGE_KEY="vote_average";
     String OVERVIEW_KEY="overview";
     String URL_JPG_KEY="poster_path";
+    String URL_POSTER_KEY="backdrop_path";
 
 
     private String title;
@@ -26,6 +27,8 @@ public class Movie implements Parcelable{
     private float vote_average;
     private String overview;
     private String urlOfImage;
+    private String urlOfPoster;
+
 
 
     public Movie(JSONObject jsonObject) {
@@ -34,12 +37,21 @@ public class Movie implements Parcelable{
             this.release_date=jsonObject.getString(RELEASE_DATE_KEY);
             this.vote_average= (float) jsonObject.getDouble(VOTE_AVERAGE_KEY);
             this.overview=jsonObject.getString(OVERVIEW_KEY);
-            this.urlOfImage= "http://image.tmdb.org/t/p/w780" + jsonObject.getString(TITLE_KEY);
+            this.urlOfImage= "http://image.tmdb.org/t/p/w780" + jsonObject.getString(URL_JPG_KEY);
+            this.urlOfPoster= "http://image.tmdb.org/t/p/w780" + jsonObject.getString(URL_POSTER_KEY);
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
+    }
+
+    public String getUrlOfPoster() {
+        return urlOfPoster;
+    }
+
+    public void setUrlOfPoster(String urlOfPoster) {
+        this.urlOfPoster = urlOfPoster;
     }
 
     protected Movie(Parcel in) {
@@ -48,6 +60,7 @@ public class Movie implements Parcelable{
         vote_average=in.readFloat();
         overview=in.readString();
         urlOfImage=in.readString();
+        urlOfPoster=in.readString();
     }
 
     public Movie(String title, String release_date, float vote_average, String overview, String urlOfImage) {
@@ -122,6 +135,7 @@ public class Movie implements Parcelable{
         dest.writeFloat(vote_average);
         dest.writeString(overview);
         dest.writeString(urlOfImage);
+        dest.writeString(urlOfPoster);
     }
 
     public  static  Movie[] getMovies() {
